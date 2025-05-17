@@ -1,0 +1,98 @@
+Generated on 2025-05-16 21:36:05 by gEcon ver. 1.2.3 (2025-04-13)
+http://gecon.r-forge.r-project.org/
+
+Model name: hf_chapter3
+
+Variables selected for reduction:
+    K_d[], L_d[]
+
+Block: CONSUMER
+ Definitions:
+    u[] = gamma * log(C[] - phi * C[-1]) + log(1 - L_s[]) * (1 - gamma)
+ Controls:
+    K_s[], C[], L_s[], I[]
+ Objective:
+    U[] = beta * E[][U[1]] + gamma * log(C[] - phi * C[-1]) + log(1 - L_s[]) * (1 - gamma)
+ Constraints:
+    pi[] - C[] - I[] + K_s[-1] * r[] + L_s[] * W[] = 0    (lambda__CONSUMER_1[])
+    I[] - K_s[] + K_s[-1] * (1 - delta) = 0    (lambda__CONSUMER_2[])
+ First order conditions:
+    -lambda__CONSUMER_2[] + beta * ((1 - delta) * E[][lambda__CONSUMER_2[1]] + E[][lambda__CONSUMER_1[1] * r[1]]) = 0    (K_s[])
+    -lambda__CONSUMER_1[] + gamma * (C[] - phi * C[-1])^-1 - beta * gamma * phi * E[][(C[1] - phi * C[])^-1] = 0    (C[])
+    lambda__CONSUMER_1[] * W[] - (1 - gamma) * (1 - L_s[])^-1 = 0    (L_s[])
+    -lambda__CONSUMER_1[] + lambda__CONSUMER_2[] = 0    (I[])
+
+Block: FIRM
+ Controls:
+    K_d[], L_d[], Y[], pi[]
+ Objective:
+    PI[] = pi[]
+ Constraints:
+    -Y[] + A[] * K_d[]^alpha * L_d[]^(1 - alpha) = 0    (lambda__FIRM_1[])
+    -pi[] + Y[] - r[] * K_d[] - L_d[] * W[] = 0    (lambda__FIRM_2[])
+ First order conditions:
+    -lambda__FIRM_2[] * r[] + alpha * lambda__FIRM_1[] * A[] * K_d[]^(-1 + alpha) * L_d[]^(1 - alpha) = 0    (K_d[])
+    -lambda__FIRM_2[] * W[] + lambda__FIRM_1[] * A[] * (1 - alpha) * K_d[]^alpha * L_d[]^(-alpha) = 0    (L_d[])
+    -lambda__FIRM_1[] + lambda__FIRM_2[] = 0    (Y[])
+    1 - lambda__FIRM_2[] = 0    (pi[])
+ First order conditions after reduction:
+    -r[] + alpha * A[] * K_d[]^(-1 + alpha) * L_d[]^(1 - alpha) = 0    (K_d[])
+    -W[] + A[] * (1 - alpha) * K_d[]^alpha * L_d[]^(-alpha) = 0    (L_d[])
+
+Block: EQUILIBRIUM
+ Identities:
+    K_s[-1] - K_d[] = 0
+    -L_d[] + L_s[] = 0
+
+Block: EXOG
+ Identities:
+    -A[] + exp(epsilon_A[] + rho * log(A[-1])) = 0
+
+Variables (12):
+    lambda__CONSUMER_2[], pi[], r[], A[], C[], I[], K_s[], L_s[], PI[], U[], W[], Y[]
+
+Shocks (1):
+    epsilon_A[]
+
+Parameters (6):
+    alpha, beta, delta, gamma, phi, rho
+
+Free parameters (6):
+    alpha, beta, delta, gamma, phi, rho
+
+Equations (12):
+ (1)  -lambda__CONSUMER_2[] + beta * ((1 - delta) * E[][lambda__CONSUMER_2[1]] + E[][lambda__CONSUMER_2[1] * r[1]]) = 0
+ (2)  -pi[] + PI[] = 0
+ (3)  -r[] + alpha * A[] * K_s[-1]^(-1 + alpha) * L_s[]^(1 - alpha) = 0
+ (4)  -A[] + exp(epsilon_A[] + rho * log(A[-1])) = 0
+ (5)  -W[] + A[] * (1 - alpha) * K_s[-1]^alpha * L_s[]^(-alpha) = 0
+ (6)  -Y[] + A[] * K_s[-1]^alpha * L_s[]^(1 - alpha) = 0
+ (7)  lambda__CONSUMER_2[] * W[] - (1 - gamma) * (1 - L_s[])^-1 = 0
+ (8)  -lambda__CONSUMER_2[] + gamma * (C[] - phi * C[-1])^-1 - beta * gamma * phi * E[][(C[1] - phi * C[])^-1] = 0
+ (9)  I[] - K_s[] + K_s[-1] * (1 - delta) = 0
+ (10)  -pi[] + Y[] - K_s[-1] * r[] - L_s[] * W[] = 0
+ (11)  U[] - beta * E[][U[1]] - gamma * log(C[] - phi * C[-1]) - log(1 - L_s[]) * (1 - gamma) = 0
+ (12)  pi[] - C[] - I[] + K_s[-1] * r[] + L_s[] * W[] = 0
+
+Steady state equations (12):
+ (1)  -lambda__CONSUMER_2[ss] + beta * (lambda__CONSUMER_2[ss] * r[ss] + lambda__CONSUMER_2[ss] * (1 - delta)) = 0
+ (2)  -pi[ss] + PI[ss] = 0
+ (3)  -r[ss] + alpha * A[ss] * K_s[ss]^(-1 + alpha) * L_s[ss]^(1 - alpha) = 0
+ (4)  -A[ss] + exp(rho * log(A[ss])) = 0
+ (5)  -W[ss] + A[ss] * (1 - alpha) * K_s[ss]^alpha * L_s[ss]^(-alpha) = 0
+ (6)  -Y[ss] + A[ss] * K_s[ss]^alpha * L_s[ss]^(1 - alpha) = 0
+ (7)  lambda__CONSUMER_2[ss] * W[ss] - (1 - gamma) * (1 - L_s[ss])^-1 = 0
+ (8)  -lambda__CONSUMER_2[ss] + gamma * (C[ss] - phi * C[ss])^-1 - beta * gamma * phi * (C[ss] - phi * C[ss])^-1 = 0
+ (9)  I[ss] - K_s[ss] + K_s[ss] * (1 - delta) = 0
+ (10)  -pi[ss] + Y[ss] - r[ss] * K_s[ss] - L_s[ss] * W[ss] = 0
+ (11)  U[ss] - beta * U[ss] - gamma * log(C[ss] - phi * C[ss]) - log(1 - L_s[ss]) * (1 - gamma) = 0
+ (12)  pi[ss] - C[ss] - I[ss] + r[ss] * K_s[ss] + L_s[ss] * W[ss] = 0
+
+Parameter settings (6):
+ (1)  alpha = 0.35
+ (2)  beta = 0.97
+ (3)  delta = 0.06
+ (4)  gamma = 0.4
+ (5)  phi = 0.8
+ (6)  rho = 0.95
+
