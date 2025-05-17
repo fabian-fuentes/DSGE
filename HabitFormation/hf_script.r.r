@@ -1,7 +1,8 @@
 #Habit formation analysis
  library(gEcon)
- dir.model<-r"(C:\Users\AP03054557\OneDrive\Edmundo-ITESM\2.Cursos Impartidos\Economic Dynamics_and_General_Equilibrium _Models_gh\Models\3. HabitFormation\)"
- gcn.file<-"hf_chapter3.gcn"
+ 
+ dir.model <- paste0(getwd(),'/HabitFormation/')
+ gcn.file <- "hf_chapter3.gcn"
 
 #create a model from gcc.file
   model <- make_model(paste0(dir.model,gcn.file))
