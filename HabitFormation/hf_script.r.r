@@ -65,7 +65,7 @@
   out<-rbind(out,out1)
 
 #print simulation
-  write.csv(out,paste0(dir.model,"out.csv"),row.names=FALSE)
+  write.csv(out,paste0(dir.model,"out/out.csv"),row.names=FALSE)
 
 
 #Now let's compare how the intensity of the productivy shock affects the model 
@@ -108,4 +108,4 @@ out_all <- do.call("rbind",out_all)
 head(out_all)
 
 #print simulation
- write.csv(out_all,paste0(dir.model,"out_sentivity.csv"),row.names=FALSE)
+ write.csv(out_all,paste0(dir.model,"out/out_sentivity.csv"),row.names=FALSE)

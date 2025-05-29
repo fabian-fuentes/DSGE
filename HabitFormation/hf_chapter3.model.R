@@ -1,10 +1,10 @@
-# Generated on 2025-05-17 08:25:22 by gEcon ver. 1.2.3 (2025-04-13)
+# Generated on 2025-05-29 16:54:22 by gEcon ver. 1.2.3 (2025-04-13)
 # http://gecon.r-forge.r-project.org/
 
 # Model name: hf_chapter3
 
 # info
-info__ <- c("hf_chapter3", "C:/Users/fuent/Desktop/DSGE/HabitFormation/hf_chapter3.gcn", "2025-05-17 08:25:22", "false")
+info__ <- c("hf_chapter3", "/Users/fabianfuentes/Library/CloudStorage/OneDrive-InstitutoTecnologicoydeEstudiosSuperioresdeMonterrey/2025/T_abr_jun/Macro/DSGE/HabitFormation/hf_chapter3.gcn", "2025-05-29 16:54:22", "false")
 
 # index sets
 index_sets__ <- list()

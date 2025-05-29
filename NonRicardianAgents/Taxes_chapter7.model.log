@@ -1,0 +1,118 @@
+Generated on 2025-05-29 16:56:51 by gEcon ver. 1.2.3 (2025-04-13)
+http://gecon.r-forge.r-project.org/
+
+Model name: Taxes_chapter7
+
+Variables selected for reduction:
+    K_d[], L_d[]
+
+Block: CONSUMER
+ Definitions:
+    u[] = gamma * log(C[]) + log(1 - L_s[]) * (1 - gamma)
+ Controls:
+    K_s[], C[], L_s[], I[]
+ Objective:
+    U[] = beta * E[][U[1]] + gamma * log(C[]) + log(1 - L_s[]) * (1 - gamma)
+ Constraints:
+    pi[] + GT[] - I[] - C[] * (1 + tau_c) + K_s[-1] * r[] * (1 - tau_k) + L_s[] * W[] * (1 - tau_l) = 0    (lambda_c[])
+    I[] - K_s[] + K_s[-1] * (1 - delta) = 0    (lambda__CONSUMER_2[])
+ First order conditions:
+    -lambda__CONSUMER_2[] + beta * ((1 - delta) * E[][lambda__CONSUMER_2[1]] + (1 - tau_k) * E[][lambda_c[1] * r[1]]) = 0    (K_s[])
+    gamma * C[]^-1 + lambda_c[] * (-1 - tau_c) = 0    (C[])
+    -(1 - gamma) * (1 - L_s[])^-1 + lambda_c[] * W[] * (1 - tau_l) = 0    (L_s[])
+    lambda__CONSUMER_2[] - lambda_c[] = 0    (I[])
+
+Block: FIRM
+ Controls:
+    K_d[], L_d[], Y[], pi[]
+ Objective:
+    PI[] = pi[]
+ Constraints:
+    -Y[] + A[] * K_d[]^alpha * L_d[]^(1 - alpha) = 0    (lambda__FIRM_1[])
+    -pi[] + Y[] - r[] * K_d[] - L_d[] * W[] = 0    (lambda__FIRM_2[])
+ First order conditions:
+    -lambda__FIRM_2[] * r[] + alpha * lambda__FIRM_1[] * A[] * K_d[]^(-1 + alpha) * L_d[]^(1 - alpha) = 0    (K_d[])
+    -lambda__FIRM_2[] * W[] + lambda__FIRM_1[] * A[] * (1 - alpha) * K_d[]^alpha * L_d[]^(-alpha) = 0    (L_d[])
+    -lambda__FIRM_1[] + lambda__FIRM_2[] = 0    (Y[])
+    1 - lambda__FIRM_2[] = 0    (pi[])
+ First order conditions after reduction:
+    -r[] + alpha * A[] * K_d[]^(-1 + alpha) * L_d[]^(1 - alpha) = 0    (K_d[])
+    -W[] + A[] * (1 - alpha) * K_d[]^alpha * L_d[]^(-alpha) = 0    (L_d[])
+
+Block: GOVERNMENT
+ Identities:
+    G_inc[] - GT[] = 0
+    -G_inc[] + T_c[] + T_l[] + T_k[] = 0
+    -T_c[] + tau_c * C[] = 0
+    -T_l[] + tau_l * L_s[] * W[] = 0
+    -T_k[] + tau_k * K_s[-1] * (-delta + r[]) = 0
+
+Block: EQUILIBRIUM
+ Identities:
+    K_s[-1] - K_d[] = 0
+    -L_d[] + L_s[] = 0
+
+Block: EXOG
+ Identities:
+    -A[] + exp(epsilon_A[] + rho * log(A[-1])) = 0
+
+Variables (17):
+    lambda_c[], pi[], r[], A[], C[], G_inc[], GT[], I[], K_s[], L_s[], PI[], T_c[], T_l[], T_k[], U[], W[], Y[]
+
+Shocks (1):
+    epsilon_A[]
+
+Parameters (8):
+    alpha, beta, delta, gamma, rho, tau_c, tau_k, tau_l
+
+Free parameters (8):
+    alpha, beta, delta, gamma, rho, tau_c, tau_k, tau_l
+
+Equations (17):
+ (1)  -lambda_c[] + beta * ((1 - delta) * E[][lambda_c[1]] + (1 - tau_k) * E[][lambda_c[1] * r[1]]) = 0
+ (2)  -pi[] + PI[] = 0
+ (3)  -r[] + alpha * A[] * K_s[-1]^(-1 + alpha) * L_s[]^(1 - alpha) = 0
+ (4)  -A[] + exp(epsilon_A[] + rho * log(A[-1])) = 0
+ (5)  G_inc[] - GT[] = 0
+ (6)  -T_c[] + tau_c * C[] = 0
+ (7)  -T_l[] + tau_l * L_s[] * W[] = 0
+ (8)  -T_k[] + tau_k * K_s[-1] * (-delta + r[]) = 0
+ (9)  -W[] + A[] * (1 - alpha) * K_s[-1]^alpha * L_s[]^(-alpha) = 0
+ (10)  -Y[] + A[] * K_s[-1]^alpha * L_s[]^(1 - alpha) = 0
+ (11)  gamma * C[]^-1 + lambda_c[] * (-1 - tau_c) = 0
+ (12)  -(1 - gamma) * (1 - L_s[])^-1 + lambda_c[] * W[] * (1 - tau_l) = 0
+ (13)  I[] - K_s[] + K_s[-1] * (1 - delta) = 0
+ (14)  -pi[] + Y[] - K_s[-1] * r[] - L_s[] * W[] = 0
+ (15)  -G_inc[] + T_c[] + T_l[] + T_k[] = 0
+ (16)  U[] - beta * E[][U[1]] - gamma * log(C[]) - log(1 - L_s[]) * (1 - gamma) = 0
+ (17)  pi[] + GT[] - I[] - C[] * (1 + tau_c) + K_s[-1] * r[] * (1 - tau_k) + L_s[] * W[] * (1 - tau_l) = 0
+
+Steady state equations (17):
+ (1)  -lambda_c[ss] + beta * (lambda_c[ss] * (1 - delta) + lambda_c[ss] * r[ss] * (1 - tau_k)) = 0
+ (2)  -pi[ss] + PI[ss] = 0
+ (3)  -r[ss] + alpha * A[ss] * K_s[ss]^(-1 + alpha) * L_s[ss]^(1 - alpha) = 0
+ (4)  -A[ss] + exp(rho * log(A[ss])) = 0
+ (5)  G_inc[ss] - GT[ss] = 0
+ (6)  -T_c[ss] + tau_c * C[ss] = 0
+ (7)  -T_l[ss] + tau_l * L_s[ss] * W[ss] = 0
+ (8)  -T_k[ss] + tau_k * K_s[ss] * (-delta + r[ss]) = 0
+ (9)  -W[ss] + A[ss] * (1 - alpha) * K_s[ss]^alpha * L_s[ss]^(-alpha) = 0
+ (10)  -Y[ss] + A[ss] * K_s[ss]^alpha * L_s[ss]^(1 - alpha) = 0
+ (11)  gamma * C[ss]^-1 + lambda_c[ss] * (-1 - tau_c) = 0
+ (12)  -(1 - gamma) * (1 - L_s[ss])^-1 + lambda_c[ss] * W[ss] * (1 - tau_l) = 0
+ (13)  I[ss] - K_s[ss] + K_s[ss] * (1 - delta) = 0
+ (14)  -pi[ss] + Y[ss] - r[ss] * K_s[ss] - L_s[ss] * W[ss] = 0
+ (15)  -G_inc[ss] + T_c[ss] + T_l[ss] + T_k[ss] = 0
+ (16)  U[ss] - beta * U[ss] - gamma * log(C[ss]) - log(1 - L_s[ss]) * (1 - gamma) = 0
+ (17)  pi[ss] + GT[ss] - I[ss] - C[ss] * (1 + tau_c) + r[ss] * K_s[ss] * (1 - tau_k) + L_s[ss] * W[ss] * (1 - tau_l) = 0
+
+Parameter settings (8):
+ (1)  alpha = 0.35
+ (2)  beta = 0.97
+ (3)  delta = 0.06
+ (4)  gamma = 0.4
+ (5)  rho = 0.95
+ (6)  tau_c = 0.116
+ (7)  tau_k = 0.225
+ (8)  tau_l = 0.348
+

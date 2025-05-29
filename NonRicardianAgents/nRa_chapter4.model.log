@@ -1,0 +1,132 @@
+Generated on 2025-05-29 16:58:28 by gEcon ver. 1.2.3 (2025-04-13)
+http://gecon.r-forge.r-project.org/
+
+Model name: nRa_chapter4
+
+Variables selected for reduction:
+    K_d[], L_d[]
+
+Block: CONSUMER_1
+ Definitions:
+    u_1[] = gamma * log(C_1[]) + log(1 - L_1_s[]) * (1 - gamma)
+ Controls:
+    K_1_s[], C_1[], L_1_s[], I_1[]
+ Objective:
+    U_1[] = beta * E[][U_1[1]] + gamma * log(C_1[]) + log(1 - L_1_s[]) * (1 - gamma)
+ Constraints:
+    -C_1[] - I_1[] + K_1_s[-1] * r[] + L_1_s[] * W[] = 0    (lambda__CONSUMER_1_1[])
+    I_1[] - K_1_s[] + K_1_s[-1] * (1 - delta) = 0    (lambda__CONSUMER_1_2[])
+ First order conditions:
+    -lambda__CONSUMER_1_2[] + beta * ((1 - delta) * E[][lambda__CONSUMER_1_2[1]] + E[][lambda__CONSUMER_1_1[1] * r[1]]) = 0    (K_1_s[])
+    -lambda__CONSUMER_1_1[] + gamma * C_1[]^-1 = 0    (C_1[])
+    lambda__CONSUMER_1_1[] * W[] - (1 - gamma) * (1 - L_1_s[])^-1 = 0    (L_1_s[])
+    -lambda__CONSUMER_1_1[] + lambda__CONSUMER_1_2[] = 0    (I_1[])
+
+Block: CONSUMER_2
+ Definitions:
+    u_2[] = gamma * log(C_2[]) + log(1 - L_2_s[]) * (1 - gamma)
+ Controls:
+    C_2[], L_2_s[]
+ Objective:
+    U_2[] = beta * E[][U_2[1]] + gamma * log(C_2[]) + log(1 - L_2_s[]) * (1 - gamma)
+ Constraints:
+    -C_2[] + L_2_s[] * W[] = 0    (lambda__CONSUMER_2_1[])
+ First order conditions:
+    -lambda__CONSUMER_2_1[] + gamma * C_2[]^-1 = 0    (C_2[])
+    lambda__CONSUMER_2_1[] * W[] - (1 - gamma) * (1 - L_2_s[])^-1 = 0    (L_2_s[])
+ First order conditions after reduction:
+    -(1 - gamma) * (1 - L_2_s[])^-1 + gamma * C_2[]^-1 * W[] = 0    (L_2_s[])
+
+Block: AGGREGATION
+ Identities:
+    -C[] + omega * C_1[] + C_2[] * (1 - omega) = 0
+    -L_s[] + omega * L_1_s[] + L_2_s[] * (1 - omega) = 0
+    -K_s[] + omega * K_1_s[] = 0
+    -I[] + omega * I_1[] = 0
+
+Block: FIRM
+ Controls:
+    K_d[], L_d[], Y[], pi[]
+ Objective:
+    PI[] = pi[]
+ Constraints:
+    -Y[] + A[] * K_d[]^alpha * L_d[]^(1 - alpha) = 0    (lambda__FIRM_1[])
+    -pi[] + Y[] - r[] * K_d[] - L_d[] * W[] = 0    (lambda__FIRM_2[])
+ First order conditions:
+    -lambda__FIRM_2[] * r[] + alpha * lambda__FIRM_1[] * A[] * K_d[]^(-1 + alpha) * L_d[]^(1 - alpha) = 0    (K_d[])
+    -lambda__FIRM_2[] * W[] + lambda__FIRM_1[] * A[] * (1 - alpha) * K_d[]^alpha * L_d[]^(-alpha) = 0    (L_d[])
+    -lambda__FIRM_1[] + lambda__FIRM_2[] = 0    (Y[])
+    1 - lambda__FIRM_2[] = 0    (pi[])
+ First order conditions after reduction:
+    -r[] + alpha * A[] * K_d[]^(-1 + alpha) * L_d[]^(1 - alpha) = 0    (K_d[])
+    -W[] + A[] * (1 - alpha) * K_d[]^alpha * L_d[]^(-alpha) = 0    (L_d[])
+
+Block: EQUILIBRIUM
+ Identities:
+    K_s[-1] - K_d[] = 0
+    -L_d[] + L_s[] = 0
+
+Block: EXOG
+ Identities:
+    -A[] + exp(epsilon_A[] + rho * log(A[-1])) = 0
+
+Variables (18):
+    pi[], r[], A[], C[], C_1[], C_2[], I[], I_1[], K_s[], K_1_s[], L_s[], L_1_s[], L_2_s[], PI[], U_1[], U_2[], W[], Y[]
+
+Shocks (1):
+    epsilon_A[]
+
+Parameters (6):
+    alpha, beta, delta, gamma, omega, rho
+
+Free parameters (6):
+    alpha, beta, delta, gamma, omega, rho
+
+Equations (18):
+ (1)  -pi[] + PI[] = 0
+ (2)  -r[] + alpha * A[] * K_s[-1]^(-1 + alpha) * L_s[]^(1 - alpha) = 0
+ (3)  -A[] + exp(epsilon_A[] + rho * log(A[-1])) = 0
+ (4)  -C_2[] + L_2_s[] * W[] = 0
+ (5)  -I[] + omega * I_1[] = 0
+ (6)  -K_s[] + omega * K_1_s[] = 0
+ (7)  -W[] + A[] * (1 - alpha) * K_s[-1]^alpha * L_s[]^(-alpha) = 0
+ (8)  -Y[] + A[] * K_s[-1]^alpha * L_s[]^(1 - alpha) = 0
+ (9)  beta * (gamma * E[][r[1] * C_1[1]^-1] + gamma * (1 - delta) * E[][C_1[1]^-1]) - gamma * C_1[]^-1 = 0
+ (10)  -(1 - gamma) * (1 - L_1_s[])^-1 + gamma * C_1[]^-1 * W[] = 0
+ (11)  -(1 - gamma) * (1 - L_2_s[])^-1 + gamma * C_2[]^-1 * W[] = 0
+ (12)  -C[] + omega * C_1[] + C_2[] * (1 - omega) = 0
+ (13)  I_1[] - K_1_s[] + K_1_s[-1] * (1 - delta) = 0
+ (14)  -L_s[] + omega * L_1_s[] + L_2_s[] * (1 - omega) = 0
+ (15)  -pi[] + Y[] - K_s[-1] * r[] - L_s[] * W[] = 0
+ (16)  -C_1[] - I_1[] + K_1_s[-1] * r[] + L_1_s[] * W[] = 0
+ (17)  U_1[] - beta * E[][U_1[1]] - gamma * log(C_1[]) - log(1 - L_1_s[]) * (1 - gamma) = 0
+ (18)  U_2[] - beta * E[][U_2[1]] - gamma * log(C_2[]) - log(1 - L_2_s[]) * (1 - gamma) = 0
+
+Steady state equations (18):
+ (1)  -pi[ss] + PI[ss] = 0
+ (2)  -r[ss] + alpha * A[ss] * K_s[ss]^(-1 + alpha) * L_s[ss]^(1 - alpha) = 0
+ (3)  -A[ss] + exp(rho * log(A[ss])) = 0
+ (4)  -C_2[ss] + L_2_s[ss] * W[ss] = 0
+ (5)  -I[ss] + omega * I_1[ss] = 0
+ (6)  -K_s[ss] + omega * K_1_s[ss] = 0
+ (7)  -W[ss] + A[ss] * (1 - alpha) * K_s[ss]^alpha * L_s[ss]^(-alpha) = 0
+ (8)  -Y[ss] + A[ss] * K_s[ss]^alpha * L_s[ss]^(1 - alpha) = 0
+ (9)  beta * (gamma * r[ss] * C_1[ss]^-1 + gamma * C_1[ss]^-1 * (1 - delta)) - gamma * C_1[ss]^-1 = 0
+ (10)  -(1 - gamma) * (1 - L_1_s[ss])^-1 + gamma * C_1[ss]^-1 * W[ss] = 0
+ (11)  -(1 - gamma) * (1 - L_2_s[ss])^-1 + gamma * C_2[ss]^-1 * W[ss] = 0
+ (12)  -C[ss] + omega * C_1[ss] + C_2[ss] * (1 - omega) = 0
+ (13)  I_1[ss] - K_1_s[ss] + K_1_s[ss] * (1 - delta) = 0
+ (14)  -L_s[ss] + omega * L_1_s[ss] + L_2_s[ss] * (1 - omega) = 0
+ (15)  -pi[ss] + Y[ss] - r[ss] * K_s[ss] - L_s[ss] * W[ss] = 0
+ (16)  -C_1[ss] - I_1[ss] + r[ss] * K_1_s[ss] + L_1_s[ss] * W[ss] = 0
+ (17)  U_1[ss] - beta * U_1[ss] - gamma * log(C_1[ss]) - log(1 - L_1_s[ss]) * (1 - gamma) = 0
+ (18)  U_2[ss] - beta * U_2[ss] - gamma * log(C_2[ss]) - log(1 - L_2_s[ss]) * (1 - gamma) = 0
+
+Parameter settings (6):
+ (1)  alpha = 0.35
+ (2)  beta = 0.97
+ (3)  delta = 0.06
+ (4)  gamma = 0.4
+ (5)  omega = 0.5
+ (6)  rho = 0.95
+

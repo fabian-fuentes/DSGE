@@ -1,7 +1,7 @@
-% Generated on 2025-05-29 16:54:22 by gEcon ver. 1.2.3 (2025-04-13)
+% Generated on 2025-05-29 16:56:51 by gEcon ver. 1.2.3 (2025-04-13)
 % http://gecon.r-forge.r-project.org/
 
-% Model name: hf_chapter3
+% Model name: Taxes_chapter7
 
 \section{CONSUMER}
 
@@ -9,9 +9,9 @@
 
 \begin{align}
 &\max_{K^{\mathrm{s}}_{t}, C_{t}, L^{\mathrm{s}}_{t}, I_{t}
-} U_{t} = {\beta} {\mathrm{E}_{t}\left[U_{t+1}\right]} + {\gamma} {\log\left(C_{t} - {\phi} {C_{t-1}}\right)} + {\log\left(1 - L^{\mathrm{s}}_{t}\right)} \left(1 - \gamma\right)\\
+} U_{t} = {\beta} {\mathrm{E}_{t}\left[U_{t+1}\right]} + {\gamma} {\log{C_{t}}} + {\log\left(1 - L^{\mathrm{s}}_{t}\right)} \left(1 - \gamma\right)\\
 &\mathrm{s.t.:}\nonumber\\
-& C_{t} + I_{t} = \pi_{t} + {K^{\mathrm{s}}_{t-1}} {r_{t}} + {L^{\mathrm{s}}_{t}} {W_{t}} \quad \left(\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}_{t}\right)\\
+& I_{t} + {C_{t}} \left(1 + \tau^{\mathrm{c}}\right) = \pi_{t} + {G\!T}_{t} + {K^{\mathrm{s}}_{t-1}} {r_{t}} \left(1 - \tau^{\mathrm{k}}\right) + {L^{\mathrm{s}}_{t}} {W_{t}} \left(1 - \tau^{\mathrm{l}}\right) \quad \left(\lambda^{\mathrm{c}}_{t}\right)\\
 & K^{\mathrm{s}}_{t} = I_{t} + {K^{\mathrm{s}}_{t-1}} \left(1 - \delta\right) \quad \left(\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t}\right)
 \end{align}
 
@@ -19,19 +19,19 @@
 \subsection{First order conditions}
 
 \begin{equation}
--\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t} + {\beta} \left(\left(1 - \delta\right) {\mathrm{E}_{t}\left[\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t+1}\right]} + \mathrm{E}_{t}\left[{\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}_{t+1}} {r_{t+1}}\right]\right) = 0
+-\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t} + {\beta} \left(\left(1 - \delta\right) {\mathrm{E}_{t}\left[\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t+1}\right]} + \left(1 - \tau^{\mathrm{k}}\right) {\mathrm{E}_{t}\left[{\lambda^{\mathrm{c}}_{t+1}} {r_{t+1}}\right]}\right) = 0
  \quad \left(K^{\mathrm{s}}_{t}\right)
 \end{equation}
 \begin{equation}
--\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}_{t} + {\gamma} \left(C_{t} - {\phi} {C_{t-1}}\right)^{-1} - {\beta} {\gamma} {\phi} {\mathrm{E}_{t}\left[\left(C_{t+1} - {\phi} {C_{t}}\right)^{-1}\right]} = 0
+{\gamma} {C_{t}}^{-1} + {\lambda^{\mathrm{c}}_{t}} \left(-1 - \tau^{\mathrm{c}}\right) = 0
  \quad \left(C_{t}\right)
 \end{equation}
 \begin{equation}
-{\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}_{t}} {W_{t}} - \left(1 - \gamma\right) \left(1 - L^{\mathrm{s}}_{t}\right)^{-1} = 0
+-\left(1 - \gamma\right) \left(1 - L^{\mathrm{s}}_{t}\right)^{-1} + {\lambda^{\mathrm{c}}_{t}} {W_{t}} \left(1 - \tau^{\mathrm{l}}\right) = 0
  \quad \left(L^{\mathrm{s}}_{t}\right)
 \end{equation}
 \begin{equation}
--\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}_{t} + \lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t} = 0
+\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t} - \lambda^{\mathrm{c}}_{t} = 0
  \quad \left(I_{t}\right)
 \end{equation}
 
@@ -85,6 +85,29 @@
 
 
 
+\section{GOVERNMENT}
+
+\subsection{Identities}
+
+\begin{equation}
+{G\!T}_{t} = G^{\mathrm{inc}}_{t}
+\end{equation}
+\begin{equation}
+G^{\mathrm{inc}}_{t} = T^{\mathrm{c}}_{t} + T^{\mathrm{l}}_{t} + T^{\mathrm{k}}_{t}
+\end{equation}
+\begin{equation}
+T^{\mathrm{c}}_{t} = {\tau^{\mathrm{c}}} {C_{t}}
+\end{equation}
+\begin{equation}
+T^{\mathrm{l}}_{t} = {\tau^{\mathrm{l}}} {L^{\mathrm{s}}_{t}} {W_{t}}
+\end{equation}
+\begin{equation}
+T^{\mathrm{k}}_{t} = {\tau^{\mathrm{k}}} {K^{\mathrm{s}}_{t-1}} \left(-\delta + r_{t}\right)
+\end{equation}
+
+
+
+
 \section{EQUILIBRIUM}
 
 \subsection{Identities}
@@ -113,7 +136,7 @@ A_{t} = e^{\epsilon^{\mathrm{A}}_{t} + {\rho} {\log{A_{t-1}}}}
 \section{Equilibrium relationships (after reduction)}
 
 \begin{equation}
--\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t} + {\beta} \left(\left(1 - \delta\right) {\mathrm{E}_{t}\left[\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t+1}\right]} + \mathrm{E}_{t}\left[{\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t+1}} {r_{t+1}}\right]\right) = 0
+-\lambda^{\mathrm{c}}_{t} + {\beta} \left(\left(1 - \delta\right) {\mathrm{E}_{t}\left[\lambda^{\mathrm{c}}_{t+1}\right]} + \left(1 - \tau^{\mathrm{k}}\right) {\mathrm{E}_{t}\left[{\lambda^{\mathrm{c}}_{t+1}} {r_{t+1}}\right]}\right) = 0
 \end{equation}
 \begin{equation}
 -\pi_{t} + \Pi_{t} = 0
@@ -125,16 +148,28 @@ A_{t} = e^{\epsilon^{\mathrm{A}}_{t} + {\rho} {\log{A_{t-1}}}}
 -A_{t} + e^{\epsilon^{\mathrm{A}}_{t} + {\rho} {\log{A_{t-1}}}} = 0
 \end{equation}
 \begin{equation}
+G^{\mathrm{inc}}_{t} - {G\!T}_{t} = 0
+\end{equation}
+\begin{equation}
+-T^{\mathrm{c}}_{t} + {\tau^{\mathrm{c}}} {C_{t}} = 0
+\end{equation}
+\begin{equation}
+-T^{\mathrm{l}}_{t} + {\tau^{\mathrm{l}}} {L^{\mathrm{s}}_{t}} {W_{t}} = 0
+\end{equation}
+\begin{equation}
+-T^{\mathrm{k}}_{t} + {\tau^{\mathrm{k}}} {K^{\mathrm{s}}_{t-1}} \left(-\delta + r_{t}\right) = 0
+\end{equation}
+\begin{equation}
 -W_{t} + {A_{t}} \left(1 - \alpha\right) {{K^{\mathrm{s}}_{t-1}}^{\alpha}} {{L^{\mathrm{s}}_{t}}^{-\alpha}} = 0
 \end{equation}
 \begin{equation}
 -Y_{t} + {A_{t}} {{K^{\mathrm{s}}_{t-1}}^{\alpha}} {{L^{\mathrm{s}}_{t}}^{1 - \alpha}} = 0
 \end{equation}
 \begin{equation}
-{\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t}} {W_{t}} - \left(1 - \gamma\right) \left(1 - L^{\mathrm{s}}_{t}\right)^{-1} = 0
+{\gamma} {C_{t}}^{-1} + {\lambda^{\mathrm{c}}_{t}} \left(-1 - \tau^{\mathrm{c}}\right) = 0
 \end{equation}
 \begin{equation}
--\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_{t} + {\gamma} \left(C_{t} - {\phi} {C_{t-1}}\right)^{-1} - {\beta} {\gamma} {\phi} {\mathrm{E}_{t}\left[\left(C_{t+1} - {\phi} {C_{t}}\right)^{-1}\right]} = 0
+-\left(1 - \gamma\right) \left(1 - L^{\mathrm{s}}_{t}\right)^{-1} + {\lambda^{\mathrm{c}}_{t}} {W_{t}} \left(1 - \tau^{\mathrm{l}}\right) = 0
 \end{equation}
 \begin{equation}
 I_{t} - K^{\mathrm{s}}_{t} + {K^{\mathrm{s}}_{t-1}} \left(1 - \delta\right) = 0
@@ -143,10 +178,13 @@ I_{t} - K^{\mathrm{s}}_{t} + {K^{\mathrm{s}}_{t-1}} \left(1 - \delta\right) = 0
 -\pi_{t} + Y_{t} - {K^{\mathrm{s}}_{t-1}} {r_{t}} - {L^{\mathrm{s}}_{t}} {W_{t}} = 0
 \end{equation}
 \begin{equation}
-U_{t} - {\beta} {\mathrm{E}_{t}\left[U_{t+1}\right]} - {\gamma} {\log\left(C_{t} - {\phi} {C_{t-1}}\right)} - {\log\left(1 - L^{\mathrm{s}}_{t}\right)} \left(1 - \gamma\right) = 0
+-G^{\mathrm{inc}}_{t} + T^{\mathrm{c}}_{t} + T^{\mathrm{l}}_{t} + T^{\mathrm{k}}_{t} = 0
 \end{equation}
 \begin{equation}
-\pi_{t} - C_{t} - I_{t} + {K^{\mathrm{s}}_{t-1}} {r_{t}} + {L^{\mathrm{s}}_{t}} {W_{t}} = 0
+U_{t} - {\beta} {\mathrm{E}_{t}\left[U_{t+1}\right]} - {\gamma} {\log{C_{t}}} - {\log\left(1 - L^{\mathrm{s}}_{t}\right)} \left(1 - \gamma\right) = 0
+\end{equation}
+\begin{equation}
+\pi_{t} + {G\!T}_{t} - I_{t} - {C_{t}} \left(1 + \tau^{\mathrm{c}}\right) + {K^{\mathrm{s}}_{t-1}} {r_{t}} \left(1 - \tau^{\mathrm{k}}\right) + {L^{\mathrm{s}}_{t}} {W_{t}} \left(1 - \tau^{\mathrm{l}}\right) = 0
 \end{equation}
 
 
@@ -154,7 +192,7 @@ U_{t} - {\beta} {\mathrm{E}_{t}\left[U_{t+1}\right]} - {\gamma} {\log\left(C_{t}
 \section{Steady state relationships (after reduction)}
 
 \begin{equation}
--\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_\mathrm{ss} + {\beta} \left({\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_\mathrm{ss}} {r_\mathrm{ss}} + {\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_\mathrm{ss}} \left(1 - \delta\right)\right) = 0
+-\lambda^{\mathrm{c}}_\mathrm{ss} + {\beta} \left({\lambda^{\mathrm{c}}_\mathrm{ss}} \left(1 - \delta\right) + {\lambda^{\mathrm{c}}_\mathrm{ss}} {r_\mathrm{ss}} \left(1 - \tau^{\mathrm{k}}\right)\right) = 0
 \end{equation}
 \begin{equation}
 -\pi_\mathrm{ss} + \Pi_\mathrm{ss} = 0
@@ -166,16 +204,28 @@ U_{t} - {\beta} {\mathrm{E}_{t}\left[U_{t+1}\right]} - {\gamma} {\log\left(C_{t}
 -A_\mathrm{ss} + e^{{\rho} {\log{A_\mathrm{ss}}}} = 0
 \end{equation}
 \begin{equation}
+G^{\mathrm{inc}}_\mathrm{ss} - {G\!T}_\mathrm{ss} = 0
+\end{equation}
+\begin{equation}
+-T^{\mathrm{c}}_\mathrm{ss} + {\tau^{\mathrm{c}}} {C_\mathrm{ss}} = 0
+\end{equation}
+\begin{equation}
+-T^{\mathrm{l}}_\mathrm{ss} + {\tau^{\mathrm{l}}} {L^{\mathrm{s}}_\mathrm{ss}} {W_\mathrm{ss}} = 0
+\end{equation}
+\begin{equation}
+-T^{\mathrm{k}}_\mathrm{ss} + {\tau^{\mathrm{k}}} {K^{\mathrm{s}}_\mathrm{ss}} \left(-\delta + r_\mathrm{ss}\right) = 0
+\end{equation}
+\begin{equation}
 -W_\mathrm{ss} + {A_\mathrm{ss}} \left(1 - \alpha\right) {{K^{\mathrm{s}}_\mathrm{ss}}^{\alpha}} {{L^{\mathrm{s}}_\mathrm{ss}}^{-\alpha}} = 0
 \end{equation}
 \begin{equation}
 -Y_\mathrm{ss} + {A_\mathrm{ss}} {{K^{\mathrm{s}}_\mathrm{ss}}^{\alpha}} {{L^{\mathrm{s}}_\mathrm{ss}}^{1 - \alpha}} = 0
 \end{equation}
 \begin{equation}
-{\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_\mathrm{ss}} {W_\mathrm{ss}} - \left(1 - \gamma\right) \left(1 - L^{\mathrm{s}}_\mathrm{ss}\right)^{-1} = 0
+{\gamma} {C_\mathrm{ss}}^{-1} + {\lambda^{\mathrm{c}}_\mathrm{ss}} \left(-1 - \tau^{\mathrm{c}}\right) = 0
 \end{equation}
 \begin{equation}
--\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}_\mathrm{ss} + {\gamma} \left(C_\mathrm{ss} - {\phi} {C_\mathrm{ss}}\right)^{-1} - {\beta} {\gamma} {\phi} \left(C_\mathrm{ss} - {\phi} {C_\mathrm{ss}}\right)^{-1} = 0
+-\left(1 - \gamma\right) \left(1 - L^{\mathrm{s}}_\mathrm{ss}\right)^{-1} + {\lambda^{\mathrm{c}}_\mathrm{ss}} {W_\mathrm{ss}} \left(1 - \tau^{\mathrm{l}}\right) = 0
 \end{equation}
 \begin{equation}
 I_\mathrm{ss} - K^{\mathrm{s}}_\mathrm{ss} + {K^{\mathrm{s}}_\mathrm{ss}} \left(1 - \delta\right) = 0
@@ -184,10 +234,13 @@ I_\mathrm{ss} - K^{\mathrm{s}}_\mathrm{ss} + {K^{\mathrm{s}}_\mathrm{ss}} \left(
 -\pi_\mathrm{ss} + Y_\mathrm{ss} - {r_\mathrm{ss}} {K^{\mathrm{s}}_\mathrm{ss}} - {L^{\mathrm{s}}_\mathrm{ss}} {W_\mathrm{ss}} = 0
 \end{equation}
 \begin{equation}
-U_\mathrm{ss} - {\beta} {U_\mathrm{ss}} - {\gamma} {\log\left(C_\mathrm{ss} - {\phi} {C_\mathrm{ss}}\right)} - {\log\left(1 - L^{\mathrm{s}}_\mathrm{ss}\right)} \left(1 - \gamma\right) = 0
+-G^{\mathrm{inc}}_\mathrm{ss} + T^{\mathrm{c}}_\mathrm{ss} + T^{\mathrm{l}}_\mathrm{ss} + T^{\mathrm{k}}_\mathrm{ss} = 0
 \end{equation}
 \begin{equation}
-\pi_\mathrm{ss} - C_\mathrm{ss} - I_\mathrm{ss} + {r_\mathrm{ss}} {K^{\mathrm{s}}_\mathrm{ss}} + {L^{\mathrm{s}}_\mathrm{ss}} {W_\mathrm{ss}} = 0
+U_\mathrm{ss} - {\beta} {U_\mathrm{ss}} - {\gamma} {\log{C_\mathrm{ss}}} - {\log\left(1 - L^{\mathrm{s}}_\mathrm{ss}\right)} \left(1 - \gamma\right) = 0
+\end{equation}
+\begin{equation}
+\pi_\mathrm{ss} + {G\!T}_\mathrm{ss} - I_\mathrm{ss} - {C_\mathrm{ss}} \left(1 + \tau^{\mathrm{c}}\right) + {r_\mathrm{ss}} {K^{\mathrm{s}}_\mathrm{ss}} \left(1 - \tau^{\mathrm{k}}\right) + {L^{\mathrm{s}}_\mathrm{ss}} {W_\mathrm{ss}} \left(1 - \tau^{\mathrm{l}}\right) = 0
 \end{equation}
 
 
@@ -210,10 +263,16 @@ U_\mathrm{ss} - {\beta} {U_\mathrm{ss}} - {\gamma} {\log\left(C_\mathrm{ss} - {\
 \gamma = 0.4
 \end{equation}
 \begin{equation}
-\phi = 0.8
+\rho = 0.95
 \end{equation}
 \begin{equation}
-\rho = 0.95
+\tau^{\mathrm{c}} = 0.116
+\end{equation}
+\begin{equation}
+\tau^{\mathrm{k}} = 0.225
+\end{equation}
+\begin{equation}
+\tau^{\mathrm{l}} = 0.348
 \end{equation}
 
 
