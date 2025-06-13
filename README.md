@@ -1,6 +1,6 @@
 # DSGE Modeling Examples
 
-This repository contains several Dynamic Stochastic General Equilibrium (DSGE) examples built using the [`gEcon`](https://gecon.r-forge.r-project.org/) package for R.  Each model folder includes R scripts (`*.r.r`), model definition files (`*.gcn`) and auto-generated code from gEcon (`*.model.R`).  Resulting data from running the scripts are stored as CSV files in each directory.
+This repository contains several Dynamic Stochastic General Equilibrium (DSGE) examples built using the [`gEcon`](https://gecon.r-forge.r-project.org/) package for R.  Each model folder includes R scripts (`*.r`), model definition files (`*.gcn`) and auto-generated code from gEcon (`*.model.R`).  Resulting data from running the scripts are stored as CSV files in each directory.
 
 ```
 HabitFormation/        Habit formation model from Torres (2015)
@@ -11,13 +11,15 @@ RealBusinessCycle/     Basic real business cycle (RBC) model
 ## Requirements
 
 - R (version 4.0 or higher is recommended)
-- R packages: `gEcon`, `reshape2`
+- R packages: `gEcon`, `nleqslv`, `Rcpp`, `reshape2`
 
 The `gEcon` package is available from the R-Forge repository. Within an R session run:
 
 ```R
-install.packages("gEcon", repos = "https://R-Forge.R-project.org")
-install.packages("reshape2")
+install.packages('nleqslv')
+install.packages('Rcpp')
+install.packages('reshape2')
+install.packages("https://gecon.r-forge.r-project.org/files/gEcon_1.2.3.tar.gz", repos = NULL, type = "source")
 ```
 
 ## Running the models
@@ -26,15 +28,15 @@ After installing the required packages, set your working directory to the reposi
 
 ```R
 setwd("/path/to/DSGE")         # adjust path
-source("RealBusinessCycle/rbc_script.r.r")
+source("RealBusinessCycle/rbc_script.r")
 ```
 
 Scripts for the other models can be run in the same way:
 
 ```R
-source("HabitFormation/hf_script.r.r")          # Habit formation model
-source("NonRicardianAgents/Taxes_chapter7_script.r.r")   # Tax and Laffer curve analysis
-source("NonRicardianAgents/nRa_chapter4_script.r.r")    # Non-Ricardian agents model
+source("HabitFormation/hf_script.r")                     # Habit formation model
+source("NonRicardianAgents/Taxes_chapter7_script.r")   # Tax and Laffer curve analysis
+source("NonRicardianAgents/nRa_chapter4_script.r")     # Non-Ricardian agents model
 ```
 
 Running a script generates output CSV files inside the corresponding folder (e.g. `RealBusinessCycle/out.csv`). These files contain impulse response simulations and related results that can be used for further analysis or visualization.
